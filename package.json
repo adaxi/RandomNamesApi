@@ -1,0 +1,35 @@
+{
+  "name": "RandomNamesApi",
+  "version": "1.0.0",
+  "description": "An API that will generate random names",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "lab -c -L",
+    "test-cover": "lab -c -r html -o ./test/artifacts/coverage.html && open ./test/artifacts/coverage.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:adaxi/RandomNamesApi.git"
+  },
+  "author": "adaxi <dev@adaxisoft.be>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adaxi/RandomNamesApi/issues"
+  },
+  "homepage": "https://github.com/adaxi/RandomNamesApi",
+  "dependencies": {
+    "confidence": "^1.x.x",
+    "glue": "^2.x.x",
+    "hapi": "^11.x.x",
+    "hoek": "^2.x.x",
+    "joi": "^6.x.x",
+    "good": "^6.x.x",
+    "good-console": "^5.x.x"
+  },
+  "devDependencies": {
+    "code": "^1.x.x",
+    "lab": "^6.x.x",
+    "nodemon": "^1.x.x"
+  }
+}
