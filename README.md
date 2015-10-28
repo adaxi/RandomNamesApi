@@ -10,6 +10,7 @@ An API that will generate random names
 ## Usage
 
 ```sh
+npm install
 npm start
 ```
 
