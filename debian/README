@@ -1,6 +1,7 @@
 The Debian Package adaxisoft-api
 ----------------------------
 
-Node daemon running at startup
+The debian package provides the init script.
+It ensures that the dameon is started at boot time.
 
  -- Gerik Bonaert <dev@adaxisoft.be>  Thu, 29 Oct 2015 20:39:40 +0100
