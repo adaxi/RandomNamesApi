@@ -22,7 +22,6 @@ var manifest = {
     },
     connections: [{
         port: Config.get('/port/api'),
-        address: Config.get('/address/api'),
         labels: ['api']
     }],
     plugins: {
