@@ -1,3 +1,5 @@
+'use strict';
+
 var Joi = require('joi');
 var fs = require('fs');
 var readline = require('readline');

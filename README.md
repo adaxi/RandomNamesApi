@@ -1,10 +1,10 @@
-# RandomNamesApi
+# adaxisoft-api
 
 An API that will generate random names
 
-[![Dependency Status](https://david-dm.org/adaxi/RandomNamesApi.svg)](https://david-dm.org/adaxi/RandomNamesApi)
-[![devDependency Status](https://david-dm.org/adaxi/RandomNamesApi/dev-status.svg?theme=shields.io)](https://david-dm.org/adaxi/RandomNamesApi#info=devDependencies)
-[![Build Status](https://travis-ci.org/adaxi/RandomNamesApi.svg?branch=master)](https://travis-ci.org/adaxi/RandomNamesApi)
+[![Dependency Status](https://david-dm.org/adaxi/adaxisoft-api.svg)](https://david-dm.org/adaxi/adaxisoft-api)
+[![devDependency Status](https://david-dm.org/adaxi/adaxisoft-api/dev-status.svg?theme=shields.io)](https://david-dm.org/adaxi/adaxisoft-api#info=devDependencies)
+[![Build Status](https://travis-ci.org/adaxi/adaxisoft-api.svg?branch=master)](https://travis-ci.org/adaxi/adaxisoft-api)
 
 
 ## Usage

@@ -1,3 +1,5 @@
+'use strict';
+
 var Confidence = require('confidence');
 var Config = require('./config');
 

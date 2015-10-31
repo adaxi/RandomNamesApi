@@ -2,6 +2,9 @@
     "extends": "./node_modules/lab/lib/linters/eslint/.eslintrc",
     "rules": {
         // Override any settings from the "parent" configuration
-        "hapi/hapi-scope-start": 0 
+        "hapi/hapi-scope-start": 0,
+        "prefer-arrow-callback": 0,
+        "no-var": 0,
+	"brace-style": [2, "1tbs", { "allowSingleLine": true }]
     }
 }

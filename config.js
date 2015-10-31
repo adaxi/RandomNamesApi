@@ -1,5 +1,6 @@
-var Confidence = require('confidence');
+'use strict';
 
+var Confidence = require('confidence');
 
 var criteria = {
     env: process.env.NODE_ENV

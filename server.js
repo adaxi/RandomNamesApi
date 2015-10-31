@@ -1,5 +1,7 @@
 #!/usr/bin/env nodejs
 
+'use strict';
+
 var Composer = require('./index');
 
 Composer(function (err, server) {
