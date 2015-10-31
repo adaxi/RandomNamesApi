@@ -1,5 +1,5 @@
 {
-  "name": "RandomNamesApi",
+  "name": "adaxisoft-api",
   "version": "1.0.0",
   "description": "An API that will generate random names",
   "main": "index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:adaxi/RandomNamesApi.git"
+    "url": "git@github.com:adaxi/adaxisoft-api.git"
   },
   "author": "adaxi <dev@adaxisoft.be>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/adaxi/RandomNamesApi/issues"
+    "url": "https://github.com/adaxi/adaxisoft-api/issues"
   },
-  "homepage": "https://github.com/adaxi/RandomNamesApi",
+  "homepage": "https://github.com/adaxi/adaxisoft-api",
   "dependencies": {
     "confidence": "^1.x.x",
     "glue": "^2.x.x",
@@ -25,7 +25,8 @@
     "hoek": "^2.x.x",
     "joi": "^6.x.x",
     "good": "^6.x.x",
-    "good-console": "^5.x.x"
+    "good-console": "^5.x.x",
+    "good-file": "^5.x.x"
   },
   "devDependencies": {
     "code": "^1.x.x",

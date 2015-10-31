@@ -1,0 +1,15 @@
+Source: adaxisoft-api
+Section: web
+Priority: optional
+Maintainer: Gerik Bonaert <dev@adaxisoft.be>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.5
+Homepage: http://adaxisoft.be
+Vcs-Git: git://github.com/adaxi/adaxisoft-api.git
+Vcs-Browser: http://github.com/adaxi/adaxisoft-api
+
+Package: adaxisoft-api
+Architecture: all
+Depends: ${misc:Depends}
+Description: Provides a set of APIs
+ Provides a set of random names through an HTTP api.

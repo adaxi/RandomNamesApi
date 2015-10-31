@@ -1,0 +1,7 @@
+{
+    "extends": "./node_modules/lab/lib/linters/eslint/.eslintrc",
+    "rules": {
+        // Override any settings from the "parent" configuration
+        "hapi/hapi-scope-start": 0 
+    }
+}

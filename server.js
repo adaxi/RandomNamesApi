@@ -1,5 +1,6 @@
-var Composer = require('./index');
+#!/usr/bin/env nodejs
 
+var Composer = require('./index');
 
 Composer(function (err, server) {
 

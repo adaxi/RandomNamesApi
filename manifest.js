@@ -6,7 +6,6 @@ var criteria = {
     env: process.env.NODE_ENV
 };
 
-
 var manifest = {
     $meta: 'This file defines the plot device.',
     server: {
@@ -17,7 +16,7 @@ var manifest = {
             routes: {
                 security: true
             }
-        },
+        }
     },
     connections: [{
         port: Config.get('/port/api'),
@@ -25,18 +24,19 @@ var manifest = {
     }],
     plugins: {
         './server/api/names': [{
-		routes: {
-			prefix: '/name',
-		}
-	}],
-	'good': [{
-		options: {
-			reporters: [{
-				reporter: require('good-console'),
-				events: { log: '*', response: '*', error: '*' }		
-			}]
-		}
-	}]
+            routes: {
+                prefix: '/name'
+            }
+        }],
+        'good': [{
+            options: {
+                reporters: [{
+                    reporter: require('good-file'),
+                    events: { log: '*', response: '*', error: '*', ops: '*' },
+                    config: '/var/log/adaxisoft-api.log'
+                }]
+            }
+        }]
     }
 };
 
