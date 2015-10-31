@@ -9,7 +9,7 @@ var criteria = {
 };
 
 var manifest = {
-    $meta: 'This file defines the plot device.',
+    $meta: 'This file defines adaxisoft-api.',
     server: {
         debug: {
             request: ['error']
@@ -22,6 +22,7 @@ var manifest = {
     },
     connections: [{
         port: Config.get('/port/api'),
+        address: Config.get('/address/api'),
         labels: ['api']
     }],
     plugins: {

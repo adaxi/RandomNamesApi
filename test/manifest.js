@@ -20,7 +20,7 @@ lab.experiment('Manifest', function () {
 
     lab.test('it gets manifest meta data', function (done) {
 
-        Code.expect(Manifest.meta('/')).to.match(/this file defines the plot device/i);
+        Code.expect(Manifest.meta('/')).to.match(/this file defines adaxisoft-api/i);
 
         done();
     });
