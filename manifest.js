@@ -27,7 +27,7 @@ var manifest = {
     plugins: {
         './server/api/names': [{
             routes: {
-                prefix: '/name'
+                prefix: '/api/name'
             }
         }],
         'good': [{
@@ -35,7 +35,7 @@ var manifest = {
                 reporters: [{
                     reporter: require('good-file'),
                     events: { log: '*', response: '*', error: '*', ops: '*' },
-                    config: '/var/log/adaxisoft-api.log'
+                    config: '/var/log/adaxisoft-api/adaxisoft-api.log'
                 }]
             }
         }]

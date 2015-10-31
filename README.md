@@ -26,6 +26,7 @@ npm start
 
 ```/name/last/2``` returns two last names
 
+In a production environment it starts a unix socket, instead of a tcp socket.
 
 ## License
 

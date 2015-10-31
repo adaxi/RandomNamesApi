@@ -14,7 +14,7 @@ var config = {
         api: {
             $filter: 'env',
             test: 9090,
-            $default: '/'
+            $default: '/var/run/adaxisoft-api/adaxisoft-api.sock'
         }
     }
 };
