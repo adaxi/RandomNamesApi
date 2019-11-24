@@ -1,147 +1,89 @@
-'use strict';
+'use strict'
 
-var Lab = require('lab');
-var Code = require('code');
-var Config = require('../../../config');
-var Hapi = require('hapi');
-var IndexPlugin = require('../../../server/api/names');
+var Lab = require('@hapi/lab')
+var Code = require('@hapi/code')
+var Config = require('../../../config')
+var Hapi = require('@hapi/hapi')
+var RandomNamesPlugin = require('../../../server/api/names')
 
+var lab = exports.lab = Lab.script()
+var request, server
 
-var lab = exports.lab = Lab.script();
-var request, server;
-
-
-lab.beforeEach(function (done) {
-
-    var plugins = [IndexPlugin];
-    server = new Hapi.Server();
-    server.connection({ port: Config.get('/port/api') });
-    server.register(plugins, function (err) {
-
-        if (err) {
-            return done(err);
-        }
-
-        done();
-    });
-});
-
+lab.beforeEach(async () => {
+  var plugins = RandomNamesPlugin
+  server = new Hapi.Server({ port: Config.get('/port/api') })
+  await server.register(plugins)
+})
 
 lab.experiment('Name Plugin', function () {
+  lab.beforeEach(function () {
+    request = {
+      method: 'GET',
+      url: '/'
+    }
+  })
 
-    lab.beforeEach(function (done) {
+  lab.test('it returns a name', async () => {
+    request.headers = {
+      accept: 'text/plain'
+    }
+    const response = await server.inject(request)
+    Code.expect(response.result).to.match(/.*/i)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 
-        request = {
-            method: 'GET',
-            url: '/'
-        };
+  lab.test('it returns a name in json format', async () => {
+    request.url = '/'
+    request.headers = {
+      accept: 'application/json'
+    }
+    const response = await server.inject(request)
+    Code.expect(response.result).to.match(/.*/i)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 
-        done();
-    });
+  lab.test('it returns 4 name in json format', async () => {
+    request.url = '/4'
+    request.headers = {
+      accept: 'application/json'
+    }
+    const response = await server.inject(request)
+    Code.expect(response.result).to.match(/.*/i)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 
+  lab.test('it returns 2 names', async () => {
+    request.url = '/2'
+    const response = await server.inject(request)
+    Code.expect(response.result).to.match(/.*/i)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 
-    lab.test('it returns a name', function (done) {
+  lab.test('it returns last name', async () => {
+    request.url = '/last'
+    const response = await server.inject(request)
+    Code.expect(response.result).to.match(/.*/i)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 
-        server.inject(request, function (response) {
+  lab.test('it returns a first name', async () => {
+    request.url = '/first'
+    const response = await server.inject(request)
+    Code.expect(response.result).to.match(/.*/i)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 
-            request.headers = {
-                accept: 'text/plain'
-            };
-            Code.expect(response.result.message).to.match(/.*/i);
-            Code.expect(response.statusCode).to.equal(200);
+  lab.test('it returns 4 last names', async () => {
+    request.url = '/last/4'
+    const response = await server.inject(request)
+    Code.expect(response.result).to.match(/.*/i)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 
-            done();
-        });
-    });
-
-    lab.test('it returns a name in json format', function (done) {
-
-        request.url = '/';
-        request.headers = {
-            accept: 'application/json'
-        };
-        server.inject(request, function (response) {
-
-            Code.expect(response.result.message).to.match(/.*/i);
-            Code.expect(response.statusCode).to.equal(200);
-
-            done();
-        });
-    });
-
-    lab.test('it returns 4 name in json format', function (done) {
-
-        request.url = '/4';
-        request.headers = {
-            accept: 'application/json'
-        };
-        server.inject(request, function (response) {
-
-            Code.expect(response.result.message).to.match(/.*/i);
-            Code.expect(response.statusCode).to.equal(200);
-
-            done();
-        });
-    });
-
-    lab.test('it returns 2 names', function (done) {
-
-        request.url = '/2';
-        server.inject(request, function (response) {
-
-            Code.expect(response.result.message).to.match(/.*/i);
-            Code.expect(response.statusCode).to.equal(200);
-
-            done();
-        });
-    });
-
-    lab.test('it returns last name', function (done) {
-
-        request.url = '/last';
-        server.inject(request, function (response) {
-
-            Code.expect(response.result.message).to.match(/.*/i);
-            Code.expect(response.statusCode).to.equal(200);
-
-            done();
-        });
-    });
-
-    lab.test('it returns a first name', function (done) {
-
-        request.url = '/first';
-        server.inject(request, function (response) {
-
-            Code.expect(response.result.message).to.match(/.*/i);
-            Code.expect(response.statusCode).to.equal(200);
-
-            done();
-        });
-    });
-
-    lab.test('it returns 4 last names', function (done) {
-
-        request.url = '/last/4';
-        server.inject(request, function (response) {
-
-            Code.expect(response.result.message).to.match(/.*/i);
-            Code.expect(response.statusCode).to.equal(200);
-
-            done();
-        });
-    });
-
-    lab.test('it returns 3 first names', function (done) {
-
-        request.url = '/first/3';
-        server.inject(request, function (response) {
-
-            Code.expect(response.result.message).to.match(/.*/i);
-            Code.expect(response.statusCode).to.equal(200);
-
-            done();
-        });
-    });
-
-});
+  lab.test('it returns 3 first names', async () => {
+    request.url = '/first/3'
+    const response = await server.inject(request)
+    Code.expect(response.result).to.match(/.*/i)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+})

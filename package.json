@@ -4,7 +4,7 @@
   "description": "An API that will generate random names",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon -e js,mjs,json,pug server.js",
     "test": "lab -c -L",
     "test-cover": "lab -c -r html -o ./test/artifacts/coverage.html && open ./test/artifacts/coverage.html"
   },
@@ -19,18 +19,23 @@
   },
   "homepage": "https://github.com/adaxi/adaxisoft-api",
   "dependencies": {
-    "confidence": "^1.x.x",
-    "glue": "^2.x.x",
-    "hapi": "^11.x.x",
-    "hoek": "^2.x.x",
-    "joi": "^6.x.x",
-    "good": "^6.x.x",
-    "good-console": "^5.x.x",
-    "good-file": "^5.x.x"
+    "@hapi/glue": "^6.x.x",
+    "@hapi/hapi": "^18.x.x",
+    "@hapi/hoek": "^8.x.x",
+    "@hapi/inert": "^5.2.2",
+    "@hapi/joi": "^16.x.x",
+    "@hapi/vision": "^5.5.4",
+    "confidence": "^4.x.x",
+    "hapi-swagger": "^11.0.1",
+    "js-yaml": "^3.13.1",
+    "laabr": "^5.1.5",
+    "pug": "^2.0.4",
+    "swagger-markdown": "^1.2.0"
   },
   "devDependencies": {
-    "code": "^2.x.x",
-    "lab": "^7.x.x",
-    "nodemon": "^1.x.x"
+    "@hapi/code": "^7.x.x",
+    "@hapi/lab": "^21.x.x",
+    "nodemon": "^2.x.x",
+    "standard": "^14.3.1"
   }
 }

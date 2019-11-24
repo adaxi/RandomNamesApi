@@ -1,22 +1,14 @@
-'use strict';
+'use strict'
 
-var Lab = require('lab');
-var Code = require('code');
-var Composer = require('../index');
+const Lab = require('@hapi/lab')
+const Code = require('@hapi/code')
+const Composer = require('../index')
 
-
-var lab = exports.lab = Lab.script();
-
+const lab = exports.lab = Lab.script()
 
 lab.experiment('App', function () {
-
-    lab.test('it composes a server', function (done) {
-
-        Composer(function (err, composedServer) {
-
-            Code.expect(composedServer).to.be.an.object();
-
-            done(err);
-        });
-    });
-});
+  lab.test('it composes a server', async () => {
+    const composedServer = await Composer()
+    Code.expect(composedServer).to.be.an.object()
+  })
+})

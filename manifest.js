@@ -1,58 +1,55 @@
-'use strict';
+'use strict'
 
-var Confidence = require('confidence');
-var Config = require('./config');
-
+var Confidence = require('confidence')
+var Config = require('./config')
 
 var criteria = {
-    env: process.env.NODE_ENV
-};
+  env: process.env.NODE_ENV
+}
 
 var manifest = {
-    $meta: 'This file defines adaxisoft-api.',
-    server: {
-        debug: {
-            request: ['error']
-        },
-        connections: {
-            routes: {
-                security: true
-            }
-        }
+  $meta: 'This file defines adaxisoft-api.',
+  server: {
+    debug: {
+      request: ['error']
     },
-    connections: [{
-        port: Config.get('/port/api'),
-        labels: ['api']
-    }],
-    plugins: {
-        './server/api/names': [{
-            routes: {
-                prefix: '/api/name'
-            }
-        }],
-        'good': [{
-            options: {
-                reporters: [{
-                    reporter: require('good-file'),
-                    events: { log: '*', response: '*', error: '*', ops: '*' },
-                    config: '/var/log/adaxisoft-api/adaxisoft-api.log'
-                }]
-            }
-        }]
+    port: Config.get('/port/api'),
+    routes: {
+      security: true
     }
-};
+  },
+  register: {
+    plugins: [
+      {
+        plugin: '@hapi/inert'
+      },
+      {
+        plugin: '@hapi/vision'
+      },
+      {
+        plugin: 'laabr'
+      },
+      {
+        plugin: './server/api/names',
+        routes: { prefix: '/api/name' }
+      },
+      // {
+      //   plugin: './server/open-api-to-markdown',
+      //   routes: { prefix: '/open-api-to-markdown' }
+      // },
+      {
+        plugin: 'hapi-swagger'
+      }
+    ]
+  }
+}
 
-
-var store = new Confidence.Store(manifest);
-
+var store = new Confidence.Store(manifest)
 
 exports.get = function (key) {
-
-    return store.get(key, criteria);
-};
-
+  return store.get(key, criteria)
+}
 
 exports.meta = function (key) {
-
-    return store.meta(key, criteria);
-};
+  return store.meta(key, criteria)
+}

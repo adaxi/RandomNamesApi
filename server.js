@@ -1,17 +1,18 @@
 #!/usr/bin/env nodejs
 
-'use strict';
+'use strict'
 
-var Composer = require('./index');
+var Composer = require('./index')
 
-Composer(function (err, server) {
+async function startServer () {
+  try {
+    const server = await Composer()
+    await server.start()
+    console.log('Started the plot device on port ' + server.info.port)
+  } catch (err) {
+    console.error(err)
+    process.exit(1)
+  }
+}
 
-    if (err) {
-        throw err;
-    }
-
-    server.start(function () {
-
-        console.log('Started the plot device on port ' + server.info.port);
-    });
-});
+startServer()

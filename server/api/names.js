@@ -1,147 +1,132 @@
-'use strict';
+'use strict'
 
-var Joi = require('joi');
-var fs = require('fs');
-var readline = require('readline');
+const Joi = require('@hapi/joi')
+const Fs = require('fs')
+const Path = require('path')
+const Readline = require('readline')
 
 var randomElement = function (array) {
-
-    var randomIndex = Math.floor(Math.random() * array.length);
-    return array[randomIndex];
-};
+  var randomIndex = Math.floor(Math.random() * array.length)
+  return array[randomIndex]
+}
 
 var NameManager = function (firstNameList, lastNameList) {
+  var load = function (file) {
+    return new Promise(function (resolve, reject) {
+      var names = []
+      var nameStream = Readline.createInterface({
+        input: Fs.createReadStream(file)
+      })
+      nameStream.on('line', function (name) {
+        names.push(name)
+      })
+      nameStream.on('close', function () {
+        resolve(names)
+      })
+    })
+  }
 
-    var load = function (file) {
-
-        return new Promise(function (fulfill, reject) {
-
-            var names = [];
-            var nameStream = readline.createInterface({
-                input: fs.createReadStream(file)
-            });
-            nameStream.on('line', function (name) {
-
-                names.push(name);
-            });
-            nameStream.on('close', function () {
-                fulfill(names);
-            });
-        });
-    };
-
-    this.lastNames = load(lastNameList);
-    this.firstNames = load(firstNameList);
-
-};
-
+  this.lastNames = load(lastNameList)
+  this.firstNames = load(firstNameList)
+}
 
 NameManager.prototype.getLastName = function () {
-    return this.lastNames.then(randomElement);
-};
+  return this.lastNames.then(randomElement)
+}
 
 NameManager.prototype.getFirstName = function () {
-    return this.firstNames.then(randomElement);
-};
+  return this.firstNames.then(randomElement)
+}
 
 NameManager.prototype.getNames = function (count) {
+  count = count || 1
+  var names = []
+  for (var i = 0; i < count; i++) {
+    var name = Promise.all([
+      this.getFirstName(),
+      this.getLastName()
+    ]).then(function (result) {
+      return result[0] + ' ' + result[1]
+    })
+    names.push(name)
+  }
+  return Promise.all(names)
+}
 
-    count = count || 1;
-    var names = [];
-    for (var i = 0; i < count; i++) {
-        var name = Promise.all([
-            this.getFirstName(),
-            this.getLastName()
-        ]).then(function (result) {
-            return result[0] + ' ' + result[1];
-        });
-        names.push(name);
+exports.plugin = {
+  name: 'RandomNames',
+  version: '1.0.0',
+  register: (server, options) => {
+    const nameManager = new NameManager(
+      Path.join(__dirname, '..', '..', 'data', 'first_names.txt'),
+      Path.join(__dirname, '..', '..', 'data', 'last_names.txt')
+    )
+
+    var replyAccordingToAccept = ({ headers: { accept } }, h, response) => {
+      if (accept && (accept.indexOf('application/json') > -1)) {
+        return response
+      } else {
+        return h.response(response.join('\n')).type('text/plain')
+      }
     }
-    return Promise.all(names);
-};
-
-exports.register = function (server, options, next) {
-
-    var nameManager = new NameManager(__dirname + '/../../data/first_names.txt', __dirname + '/../../data/last_names.txt');
-
-    var replyAccordingToAccept = function (request, reply, response) {
-        var accept = request.headers.accept;
-        if (accept && (accept.indexOf('application/json') > -1)) {
-            reply(response);
-        } else {
-            if (Array.isArray(response)) {
-                reply(response.join('\n')).type('text/plain');
-            } else {
-                reply(response).type('text/plain');
-            }
-        }
-    };
 
     server.route({
-        method: 'GET',
-        path: '/{number?}',
-        handler: function (request, reply) {
-            nameManager.getNames(request.params.number).then(function (names) {
-                replyAccordingToAccept(request, reply, names);
-            });
-        },
-        config: {
-            validate: {
-                params: {
-                    number: Joi.number().optional().min(1).max(100)
-                }
-            }
+      method: 'GET',
+      path: '/{number?}',
+      handler: async (request, h) => {
+        const names = await nameManager.getNames(request.params.number)
+        return replyAccordingToAccept(request, h, names)
+      },
+      options: {
+        tags: ['api'],
+        validate: {
+          params: Joi.object({
+            number: Joi.number().optional().min(1).max(100)
+          })
         }
-    });
+      }
+    })
 
     server.route({
-        method: 'GET',
-        path: '/first/{number?}',
-        handler: function (request, reply) {
-            var names = [];
-            for (var i = 0; i < request.params.number; i++) {
-                names.push(nameManager.getFirstName());
-            }
-            Promise.all(names).then(function (response) {
-                replyAccordingToAccept(request, reply, response);
-            });
-        },
-        config: {
-            validate: {
-                params: {
-                    number: Joi.number().optional().min(1).max(100).default(1)
-                }
-            }
+      method: 'GET',
+      path: '/first/{number?}',
+      handler: async (request, h) => {
+        var names = []
+        for (var i = 0; i < request.params.number; i++) {
+          names.push(nameManager.getFirstName())
         }
-    });
+        const response = await Promise.all(names)
+        return replyAccordingToAccept(request, h, response)
+      },
+      options: {
+        tags: ['api'],
+        validate: {
+          params: Joi.object({
+            number: Joi.number().optional().min(1).max(100).default(1)
+          })
+        }
+      }
+    })
 
     server.route({
-        method: 'GET',
-        path: '/last/{number?}',
-        handler: function (request, reply) {
-            var names = [];
-            for (var i = 0; i < request.params.number; i++) {
-                names.push(nameManager.getLastName());
-            }
-            Promise.all(names).then(function (response) {
-                replyAccordingToAccept(request, reply, response);
-            });
-        },
-        config: {
-            validate: {
-                params: {
-                    number: Joi.number().optional().min(1).max(100).default(1)
-                }
-            }
+      method: 'GET',
+      path: '/last/{number?}',
+      handler: async (request, h) => {
+        var names = []
+        for (var i = 0; i < request.params.number; i++) {
+          names.push(nameManager.getLastName())
         }
-    });
-
-
-    next();
-};
-
-exports.register.attributes = {
-    name: 'RandomNames',
-    version: '1.0.0'
-};
-
+        const response = await Promise.all(names)
+        return replyAccordingToAccept(request, h, response)
+      },
+      options: {
+        tags: ['api'],
+        validate: {
+          params: Joi.object({
+            number: Joi.number().optional().min(1).max(100).default(1)
+          })
+        }
+      }
+    })
+  }
+}

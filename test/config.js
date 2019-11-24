@@ -1,27 +1,17 @@
-'use strict';
+'use strict'
 
-var Lab = require('lab');
-var Code = require('code');
-var Config = require('../config');
+var Lab = require('@hapi/lab')
+var Code = require('@hapi/code')
+var Config = require('../config')
 
-
-var lab = exports.lab = Lab.script();
-
+var lab = exports.lab = Lab.script()
 
 lab.experiment('Config', function () {
+  lab.test('it gets config data', () => {
+    Code.expect(Config.get('/')).to.be.an.object()
+  })
 
-    lab.test('it gets config data', function (done) {
-
-        Code.expect(Config.get('/')).to.be.an.object();
-
-        done();
-    });
-
-
-    lab.test('it gets config meta data', function (done) {
-
-        Code.expect(Config.meta('/')).to.match(/this file configures adaxisoft-api/i);
-
-        done();
-    });
-});
+  lab.test('it gets config meta data', () => {
+    Code.expect(Config.meta('/')).to.match(/this file configures adaxisoft-api/i)
+  })
+})
