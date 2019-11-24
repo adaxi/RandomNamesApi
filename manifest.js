@@ -33,10 +33,10 @@ var manifest = {
         plugin: './server/api/names',
         routes: { prefix: '/api/name' }
       },
-      // {
-      //   plugin: './server/open-api-to-markdown',
-      //   routes: { prefix: '/open-api-to-markdown' }
-      // },
+      {
+        plugin: './server/open-api-to-markdown',
+        routes: { prefix: '/open-api-to-markdown' }
+      },
       {
         plugin: 'hapi-swagger'
       }
