@@ -1,0 +1,18 @@
+extends layout.pug
+
+block content
+  h1 Online Open API to Markdown
+  form(method='POST')
+    .container
+      .left-half
+        h2 OpenAPI (.yml,.json)
+        textarea(name="openapi", cols="30", rows="10")=openapi
+        p Paste your OpenAPI 2.0 definition here.
+      .right-half
+        h2 Markdown (.md)
+        textarea(name="markdown", cols="30", rows="10" readonly)=markdown
+        p Converted markdown
+    .container
+      .center
+        button(name='submit') Convert
+
