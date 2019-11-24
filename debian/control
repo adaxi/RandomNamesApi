@@ -10,6 +10,6 @@ Vcs-Browser: http://github.com/adaxi/adaxisoft-api
 
 Package: adaxisoft-api
 Architecture: all
-Depends: ${misc:Depends}, nodejs >= 8
+Depends: ${misc:Depends}, nodejs (>= 8)
 Description: Provides a set of APIs
  Provides a set of random names through an HTTP api.

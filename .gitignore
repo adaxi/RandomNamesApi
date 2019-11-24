@@ -1,2 +1,8 @@
 node_modules
 test/artifacts/*
+debian/adaxisoft-api
+debian/*.debhelper
+debian/*.debhelper.log
+debian/*.substvars
+debian/debhelper-build-stamp
+debian/files
