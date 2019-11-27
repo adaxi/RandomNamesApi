@@ -6,11 +6,11 @@ block content
     .container
       .left-half
         h2 OpenAPI (.yml,.json)
-        textarea(name="openapi", cols="30", rows="10")=openapi
+        textarea(name="openapi", cols="30", rows="10", aria-label="open api specification")=openapi
         p Paste your OpenAPI 2.0 definition here.
       .right-half
         h2 Markdown (.md)
-        textarea(name="markdown", cols="30", rows="10" readonly)=markdown
+        textarea(name="markdown", cols="30", rows="10" aria-label="resulting markdown" readonly)=markdown
         p Converted markdown
     .container
       .center
