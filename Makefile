@@ -13,12 +13,11 @@ install:
 	install package.json 	$(DESTDIR)/usr/share/adaxisoft-api/package.json
 	cp -a server		$(DESTDIR)/usr/share/adaxisoft-api/server
 	cp -a data		$(DESTDIR)/usr/share/adaxisoft-api/data
-	cp -a node_modules	$(DESTDIR)/usr/share/adaxisoft-api/node_modules	
-	mkdir -p 		$(DESTDIR)/usr/sbin
+	cp -a node_modules	$(DESTDIR)/usr/share/adaxisoft-api/node_modules
+	mkdir -p		$(DESTDIR)/usr/sbin
 	ln -sf /usr/share/adaxisoft-api/server.js $(DESTDIR)/usr/sbin/adaxisoft-api
-test: 
+	chmod +x $(DESTDIR)/usr/share/adaxisoft-api/server.js
+test:
 	npm test
-clean: 
+clean:
 	rm -rf node_modules
-
-
