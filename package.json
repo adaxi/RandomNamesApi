@@ -20,7 +20,7 @@
   "homepage": "https://github.com/adaxi/adaxisoft-api",
   "dependencies": {
     "@hapi/glue": "^6.x.x",
-    "@hapi/hapi": "^18.x.x",
+    "@hapi/hapi": "^19.x.x",
     "@hapi/hoek": "^8.x.x",
     "@hapi/inert": "^5.2.2",
     "@hapi/joi": "^16.x.x",
