@@ -29,7 +29,7 @@
     "hapi-swagger": "^11.0.1",
     "js-yaml": "^3.13.1",
     "laabr": "^5.1.5",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "swagger-markdown": "^1.2.0"
   },
   "devDependencies": {
