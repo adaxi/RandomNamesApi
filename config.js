@@ -1,12 +1,12 @@
 'use strict'
 
-var Confidence = require('confidence')
+const Confidence = require('confidence')
 
-var criteria = {
+const criteria = {
   env: process.env.NODE_ENV
 }
 
-var config = {
+const config = {
   $meta: 'This file configures adaxisoft-api.',
   projectName: 'adaxisoft-api',
   port: {
@@ -18,7 +18,7 @@ var config = {
   }
 }
 
-var store = new Confidence.Store(config)
+const store = new Confidence.Store(config)
 
 exports.get = function (key) {
   return store.get(key, criteria)

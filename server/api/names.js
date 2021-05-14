@@ -1,20 +1,20 @@
 'use strict'
 
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 const Fs = require('fs')
 const Path = require('path')
 const Readline = require('readline')
 
-var randomElement = function (array) {
-  var randomIndex = Math.floor(Math.random() * array.length)
+const randomElement = function (array) {
+  const randomIndex = Math.floor(Math.random() * array.length)
   return array[randomIndex]
 }
 
-var NameManager = function (firstNameList, lastNameList) {
-  var load = function (file) {
+const NameManager = function (firstNameList, lastNameList) {
+  const load = function (file) {
     return new Promise(function (resolve, reject) {
-      var names = []
-      var nameStream = Readline.createInterface({
+      const names = []
+      const nameStream = Readline.createInterface({
         input: Fs.createReadStream(file)
       })
       nameStream.on('line', function (name) {
@@ -40,9 +40,9 @@ NameManager.prototype.getFirstName = function () {
 
 NameManager.prototype.getNames = function (count) {
   count = count || 1
-  var names = []
-  for (var i = 0; i < count; i++) {
-    var name = Promise.all([
+  const names = []
+  for (let i = 0; i < count; i++) {
+    const name = Promise.all([
       this.getFirstName(),
       this.getLastName()
     ]).then(function (result) {
@@ -62,7 +62,7 @@ exports.plugin = {
       Path.join(__dirname, '..', '..', 'data', 'last_names.txt')
     )
 
-    var replyAccordingToAccept = ({ headers: { accept } }, h, response) => {
+    const replyAccordingToAccept = ({ headers: { accept } }, h, response) => {
       if (accept && (accept.indexOf('application/json') > -1)) {
         return response
       } else {
@@ -91,8 +91,8 @@ exports.plugin = {
       method: 'GET',
       path: '/first/{number?}',
       handler: async (request, h) => {
-        var names = []
-        for (var i = 0; i < request.params.number; i++) {
+        const names = []
+        for (let i = 0; i < request.params.number; i++) {
           names.push(nameManager.getFirstName())
         }
         const response = await Promise.all(names)
@@ -112,8 +112,8 @@ exports.plugin = {
       method: 'GET',
       path: '/last/{number?}',
       handler: async (request, h) => {
-        var names = []
-        for (var i = 0; i < request.params.number; i++) {
+        const names = []
+        for (let i = 0; i < request.params.number; i++) {
           names.push(nameManager.getLastName())
         }
         const response = await Promise.all(names)

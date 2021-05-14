@@ -1,16 +1,16 @@
 'use strict'
 
-var Lab = require('@hapi/lab')
-var Code = require('@hapi/code')
-var Config = require('../../../config')
-var Hapi = require('@hapi/hapi')
-var RandomNamesPlugin = require('../../../server/api/names')
+const Lab = require('@hapi/lab')
+const Code = require('@hapi/code')
+const Config = require('../../../config')
+const Hapi = require('@hapi/hapi')
+const RandomNamesPlugin = require('../../../server/api/names')
 
-var lab = exports.lab = Lab.script()
-var request, server
+const lab = exports.lab = Lab.script()
+let request, server
 
 lab.beforeEach(async () => {
-  var plugins = RandomNamesPlugin
+  const plugins = RandomNamesPlugin
   server = new Hapi.Server({ port: Config.get('/port/api') })
   await server.register(plugins)
 })

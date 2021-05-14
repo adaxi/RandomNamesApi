@@ -2,7 +2,7 @@
 
 'use strict'
 
-var Composer = require('./index')
+const Composer = require('./index')
 
 async function startServer () {
   try {

@@ -1,9 +1,9 @@
 'use strict'
 
-var Glue = require('@hapi/glue')
-var Manifest = require('./manifest')
+const Glue = require('@hapi/glue')
+const Manifest = require('./manifest')
 
-var composeOptions = {
+const composeOptions = {
   relativeTo: __dirname
 }
 

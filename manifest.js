@@ -1,13 +1,13 @@
 'use strict'
 
-var Confidence = require('confidence')
-var Config = require('./config')
+const Confidence = require('confidence')
+const Config = require('./config')
 
-var criteria = {
+const criteria = {
   env: process.env.NODE_ENV
 }
 
-var manifest = {
+const manifest = {
   $meta: 'This file defines adaxisoft-api.',
   server: {
     debug: {
@@ -44,7 +44,7 @@ var manifest = {
   }
 }
 
-var store = new Confidence.Store(manifest)
+const store = new Confidence.Store(manifest)
 
 exports.get = function (key) {
   return store.get(key, criteria)

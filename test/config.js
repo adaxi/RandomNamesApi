@@ -1,10 +1,10 @@
 'use strict'
 
-var Lab = require('@hapi/lab')
-var Code = require('@hapi/code')
-var Config = require('../config')
+const Lab = require('@hapi/lab')
+const Code = require('@hapi/code')
+const Config = require('../config')
 
-var lab = exports.lab = Lab.script()
+const lab = exports.lab = Lab.script()
 
 lab.experiment('Config', function () {
   lab.test('it gets config data', () => {
