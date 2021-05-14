@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -e js,mjs,json,pug server.js",
-    "test": "lab -c -L -I __core-js_shared__,core",
+    "test": "lab -c -L -I __core-js_shared__,core,CSS,regeneratorRuntime",
     "test-cover": "lab -c -r html -o ./test/artifacts/coverage.html && open ./test/artifacts/coverage.html"
   },
   "repository": {
