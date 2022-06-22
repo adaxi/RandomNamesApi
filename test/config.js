@@ -1,10 +1,10 @@
 'use strict'
 
-const Lab = require('@hapi/lab')
-const Code = require('@hapi/code')
-const Config = require('../config')
+import Lab from '@hapi/lab'
+import Code from '@hapi/code'
+import Config from '../config.js'
 
-const lab = exports.lab = Lab.script()
+const lab = Lab.script()
 
 lab.experiment('Config', function () {
   lab.test('it gets config data', () => {
@@ -15,3 +15,5 @@ lab.experiment('Config', function () {
     Code.expect(Config.meta('/')).to.match(/this file configures adaxisoft-api/i)
   })
 })
+
+export { lab }

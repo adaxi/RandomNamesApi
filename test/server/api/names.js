@@ -1,12 +1,12 @@
 'use strict'
 
-const Lab = require('@hapi/lab')
-const Code = require('@hapi/code')
-const Config = require('../../../config')
-const Hapi = require('@hapi/hapi')
-const RandomNamesPlugin = require('../../../server/api/names')
+import Lab from '@hapi/lab'
+import Code from '@hapi/code'
+import Hapi from '@hapi/hapi'
+import Config from '../../../config.js'
+import { plugin as RandomNamesPlugin } from '../../../server/api/names.js'
 
-const lab = exports.lab = Lab.script()
+const lab = Lab.script()
 let request, server
 
 lab.beforeEach(async () => {
@@ -87,3 +87,5 @@ lab.experiment('Name Plugin', function () {
     Code.expect(response.statusCode).to.equal(200)
   })
 })
+
+export { lab }

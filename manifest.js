@@ -1,7 +1,7 @@
 'use strict'
 
-const Confidence = require('confidence')
-const Config = require('./config')
+import Confidence from 'confidence'
+import Config from './config.js'
 
 const criteria = {
   env: process.env.NODE_ENV
@@ -27,18 +27,20 @@ const manifest = {
         plugin: '@hapi/vision'
       },
       {
-        plugin: 'laabr'
+        plugin: 'laabr',
+        options: Config.get('/logger')
       },
       {
-        plugin: './server/api/names',
+        plugin: await import('./server/api/names.js'),
         routes: { prefix: '/api/name' }
       },
       {
-        plugin: './server/open-api-to-markdown',
+        plugin: await import('./server/open-api-to-markdown/index.js'),
         routes: { prefix: '/open-api-to-markdown' }
       },
       {
-        plugin: 'hapi-swagger'
+        plugin: 'hapi-swagger',
+        options: Config.get('/swagger')
       }
     ]
   }
@@ -46,10 +48,12 @@ const manifest = {
 
 const store = new Confidence.Store(manifest)
 
-exports.get = function (key) {
+const get = function (key) {
   return store.get(key, criteria)
 }
 
-exports.meta = function (key) {
+const meta = function (key) {
   return store.meta(key, criteria)
 }
+
+export default { get, meta }

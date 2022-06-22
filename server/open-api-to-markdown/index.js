@@ -1,16 +1,19 @@
 'use strict'
 
-const Pug = require('pug')
-const Path = require('path')
-const JsYaml = require('js-yaml')
+import Pug from 'pug'
+import Path from 'path'
+import JsYaml from 'js-yaml'
+import * as url from 'url'
 
-const transformInfo = require('swagger-markdown/bin/transformers/info')
-const transformPath = require('swagger-markdown/bin/transformers/path')
-const transformSecurityDefinitions = require('swagger-markdown/bin/transformers/securityDefinitions')
-const transformExternalDocs = require('swagger-markdown/bin/transformers/externalDocs')
-const transformDefinition = require('swagger-markdown/bin/transformers/definitions')
+import transformInfo from 'swagger-markdown/bin/transformers/info.js'
+import transformPath from 'swagger-markdown/bin/transformers/path.js'
+import transformSecurityDefinitions from 'swagger-markdown/bin/transformers/securityDefinitions.js'
+import transformExternalDocs from 'swagger-markdown/bin/transformers/externalDocs.js'
+import transformDefinition from 'swagger-markdown/bin/transformers/definitions.js'
 
-exports.plugin = {
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
+
+export const plugin = {
   name: 'OpenAPIToMarkdown',
   version: '1.0.0',
   register: (server, options) => {

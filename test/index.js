@@ -1,10 +1,10 @@
 'use strict'
 
-const Lab = require('@hapi/lab')
-const Code = require('@hapi/code')
-const Composer = require('../index')
+import Lab from '@hapi/lab'
+import Code from '@hapi/code'
+import Composer from '../index.js'
 
-const lab = exports.lab = Lab.script()
+const lab = Lab.script()
 
 lab.experiment('App', function () {
   lab.test('it composes a server', async () => {
@@ -12,3 +12,5 @@ lab.experiment('App', function () {
     Code.expect(composedServer).to.be.an.object()
   })
 })
+
+export { lab }

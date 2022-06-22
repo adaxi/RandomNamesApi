@@ -1,10 +1,10 @@
 'use strict'
 
-const Lab = require('@hapi/lab')
-const Code = require('@hapi/code')
-const Manifest = require('../manifest')
+import Lab from '@hapi/lab'
+import Code from '@hapi/code'
+import Manifest from '../manifest.js'
 
-const lab = exports.lab = Lab.script()
+const lab = Lab.script()
 
 lab.experiment('Manifest', function () {
   lab.test('it gets manifest data', () => {
@@ -15,3 +15,5 @@ lab.experiment('Manifest', function () {
     Code.expect(Manifest.meta('/')).to.match(/this file defines adaxisoft-api/i)
   })
 })
+
+export { lab }

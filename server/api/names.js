@@ -1,9 +1,12 @@
 'use strict'
 
-const Joi = require('joi')
-const Fs = require('fs')
-const Path = require('path')
-const Readline = require('readline')
+import Joi from 'joi'
+import Fs from 'fs'
+import Path from 'path'
+import Readline from 'readline'
+import * as url from 'url'
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 const randomElement = function (array) {
   const randomIndex = Math.floor(Math.random() * array.length)
@@ -53,7 +56,7 @@ NameManager.prototype.getNames = function (count) {
   return Promise.all(names)
 }
 
-exports.plugin = {
+export const plugin = {
   name: 'RandomNames',
   version: '1.0.0',
   register: (server, options) => {
@@ -78,11 +81,19 @@ exports.plugin = {
         return replyAccordingToAccept(request, h, names)
       },
       options: {
-        tags: ['api'],
+        tags: ['api', 'names'],
         validate: {
           params: Joi.object({
             number: Joi.number().optional().min(1).max(100)
-          })
+          }).label('Full name endpoint parameters')
+        },
+        response: {
+          status: {
+            200: Joi.alternatives().try(
+              Joi.string(),
+              Joi.array().items(Joi.string())
+            ).label('Full name response')
+          }
         }
       }
     })
@@ -99,11 +110,19 @@ exports.plugin = {
         return replyAccordingToAccept(request, h, response)
       },
       options: {
-        tags: ['api'],
+        tags: ['api', 'names'],
         validate: {
           params: Joi.object({
             number: Joi.number().optional().min(1).max(100).default(1)
-          })
+          }).label('First name endpoint parameters')
+        },
+        response: {
+          status: {
+            200: Joi.alternatives().try(
+              Joi.string(),
+              Joi.array().items(Joi.string())
+            ).label('First name response')
+          }
         }
       }
     })
@@ -120,11 +139,19 @@ exports.plugin = {
         return replyAccordingToAccept(request, h, response)
       },
       options: {
-        tags: ['api'],
+        tags: ['api', 'names'],
         validate: {
           params: Joi.object({
             number: Joi.number().optional().min(1).max(100).default(1)
-          })
+          }).label('First name endpoint parameters')
+        },
+        response: {
+          status: {
+            200: Joi.alternatives().try(
+              Joi.string(),
+              Joi.array().items(Joi.string())
+            ).label('Last name response')
+          }
         }
       }
     })

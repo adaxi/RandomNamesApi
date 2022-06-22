@@ -1,18 +1,20 @@
 'use strict'
 
-const Lab = require('@hapi/lab')
-const Code = require('@hapi/code')
-const Config = require('../../../config')
-const Hapi = require('@hapi/hapi')
-const OpenApiToMarkdownPlugin = require('../../../server/open-api-to-markdown')
+import Lab from '@hapi/lab'
+import Code from '@hapi/code'
+import Hapi from '@hapi/hapi'
+import Config from '../../../config.js'
+import Inert from '@hapi/inert'
+import Vision from '@hapi/vision'
+import { plugin as OpenApiToMarkdownPlugin } from '../../../server/open-api-to-markdown/index.js'
 
-const lab = exports.lab = Lab.script()
+const lab = Lab.script()
 let request, server
 
 lab.beforeEach(async () => {
   const plugins = [
-    require('@hapi/inert'),
-    require('@hapi/vision'),
+    Inert,
+    Vision,
     OpenApiToMarkdownPlugin
   ]
   server = new Hapi.Server({ port: Config.get('/port/api') })
@@ -43,9 +45,11 @@ lab.experiment('Open API to Markdown Plugin', function () {
       headers: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      payload: 'openapi=openapi%3A+3.0.0%0D%0Ainfo%3A%0D%0A++title%3A+Sample+API%0D%0A++description%3A+Optional+multiline+or+single-line+description+in+%5BCommonMark%5D%28http%3A%2F%2Fcommonmark.org%2Fhelp%2F%29+or+HTML.%0D%0A++version%3A+0.1.9%0D%0Aservers%3A%0D%0A++-+url%3A+http%3A%2F%2Fapi.example.com%2Fv1%0D%0A++++description%3A+Optional+server+description%2C+e.g.+Main+%28production%29+server%0D%0A++-+url%3A+http%3A%2F%2Fstaging-api.example.com%0D%0A++++description%3A+Optional+server+description%2C+e.g.+Internal+staging+server+for+testing%0D%0Apaths%3A%0D%0A++%2Fusers%3A%0D%0A++++get%3A%0D%0A++++++summary%3A+Returns+a+list+of+users.%0D%0A++++++description%3A+Optional+extended+description+in+CommonMark+or+HTML.%0D%0A++++++responses%3A%0D%0A++++++++%27200%27%3A++++%23+status+code%0D%0A++++++++++description%3A+A+JSON+array+of+user+names%0D%0A++++++++++content%3A%0D%0A++++++++++++application%2Fjson%3A%0D%0A++++++++++++++schema%3A+%0D%0A++++++++++++++++type%3A+array%0D%0A++++++++++++++++items%3A+%0D%0A++++++++++++++++++type%3A+string&markdown=%23+Sample+API%0D%0AOptional+multiline+or+single-line+description+in+%5BCommonMark%5D%28http%3A%2F%2Fcommonmark.org%2Fhelp%2F%29+or+HTML.%0D%0A%0D%0A%23%23+Version%3A+0.1.9%0D%0A%0D%0A%23%23%23+%2Fusers%0D%0A%0D%0A%23%23%23%23+GET%0D%0A%23%23%23%23%23+Summary%3A%0D%0A%0D%0AReturns+a+list+of+users.%0D%0A%0D%0A%23%23%23%23%23+Description%3A%0D%0A%0D%0AOptional+extended+description+in+CommonMark+or+HTML.%0D%0A%0D%0A%23%23%23%23%23+Responses%0D%0A%0D%0A%7C+Code+%7C+Description+%7C%0D%0A%7C+----+%7C+-----------+%7C%0D%0A%7C+200+%7C+A+JSON+array+of+user+names+%7C%0D%0A&submit='
+      payload: 'openapi=%7B%22swagger%22%3A%222.0%22%2C%22host%22%3A%22localhost%3A8080%22%2C%22basePath%22%3A%22%2F%22%2C%22schemes%22%3A%5B%22http%22%5D%2C%22info%22%3A%7B%22title%22%3A%22http%3A%2F%2Fadaxisoft.be%2Fapi%22%2C%22version%22%3A%221.0.0%22%7D%2C%22tags%22%3A%5B%7B%22name%22%3A%22names%22%2C%22description%22%3A%22Returns+random+names%22%2C%22externalDocs%22%3A%7B%22description%22%3A%22Full+list+of+names%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fadaxi%2Fadaxisoft-api%2Ftree%2Fmaster%2Fdata%22%7D%7D%5D%2C%22paths%22%3A%7B%22%2Fapi%2Fname%2F%7Bnumber%7D%22%3A%7B%22get%22%3A%7B%22operationId%22%3A%22getApiNameNumber%22%2C%22parameters%22%3A%5B%7B%22type%22%3A%22number%22%2C%22minimum%22%3A1%2C%22maximum%22%3A100%2C%22name%22%3A%22number%22%2C%22in%22%3A%22path%22%7D%5D%2C%22tags%22%3A%5B%22names%22%5D%2C%22responses%22%3A%7B%22200%22%3A%7B%22schema%22%3A%7B%22type%22%3A%22string%22%2C%22x-alternatives%22%3A%5B%7B%22type%22%3A%22string%22%7D%2C%7B%22%24ref%22%3A%22%23%2Fx-alt-definitions%2FFull%2520name%2520response%22%7D%5D%7D%2C%22description%22%3A%22Successful%22%7D%7D%7D%7D%2C%22%2Fapi%2Fname%2Ffirst%2F%7Bnumber%7D%22%3A%7B%22get%22%3A%7B%22operationId%22%3A%22getApiNameFirstNumber%22%2C%22parameters%22%3A%5B%7B%22type%22%3A%22number%22%2C%22default%22%3A1%2C%22minimum%22%3A1%2C%22maximum%22%3A100%2C%22name%22%3A%22number%22%2C%22in%22%3A%22path%22%7D%5D%2C%22tags%22%3A%5B%22names%22%5D%2C%22responses%22%3A%7B%22200%22%3A%7B%22schema%22%3A%7B%22type%22%3A%22string%22%2C%22x-alternatives%22%3A%5B%7B%22type%22%3A%22string%22%7D%2C%7B%22%24ref%22%3A%22%23%2Fx-alt-definitions%2FFull%2520name%2520response%22%7D%5D%7D%2C%22description%22%3A%22Successful%22%7D%7D%7D%7D%2C%22%2Fapi%2Fname%2Flast%2F%7Bnumber%7D%22%3A%7B%22get%22%3A%7B%22operationId%22%3A%22getApiNameLastNumber%22%2C%22parameters%22%3A%5B%7B%22type%22%3A%22number%22%2C%22default%22%3A1%2C%22minimum%22%3A1%2C%22maximum%22%3A100%2C%22name%22%3A%22number%22%2C%22in%22%3A%22path%22%7D%5D%2C%22tags%22%3A%5B%22names%22%5D%2C%22responses%22%3A%7B%22200%22%3A%7B%22schema%22%3A%7B%22type%22%3A%22string%22%2C%22x-alternatives%22%3A%5B%7B%22type%22%3A%22string%22%7D%2C%7B%22%24ref%22%3A%22%23%2Fx-alt-definitions%2FFull%2520name%2520response%22%7D%5D%7D%2C%22description%22%3A%22Successful%22%7D%7D%7D%7D%7D%2C%22definitions%22%3A%7B%7D%2C%22x-alt-definitions%22%3A%7B%22Full+name+response%22%3A%7B%22type%22%3A%22array%22%2C%22items%22%3A%7B%22type%22%3A%22string%22%7D%7D%7D%7D&markdown=&submit='
     }
     const response = await server.inject(request)
     Code.expect(response.statusCode).to.equal(200)
   })
 })
+
+export { lab }
