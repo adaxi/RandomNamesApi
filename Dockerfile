@@ -10,7 +10,7 @@ COPY index.js ./
 COPY manifest.js ./
 COPY server.js ./
 
-RUN npm install --no-audit --no-fund
+RUN npm install --no-audit --no-fund --omit dev
 
 EXPOSE 80
 
