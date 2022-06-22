@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon -e js,mjs,json,pug server.js",
     "test": "c8 lab -L -I __core-js_shared__,core,CSS,regeneratorRuntime",
-    "test-cover": "c8 lab -r html -o ../test-artifacts/coverage.html && open ./test-artifacts/coverage.html"
+    "test-cover": "c8 lab -r html -o ../test/artifacts/coverage.html && open ./test/artifacts/coverage.html"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,6 @@
     "swagger-markdown": "^1.4.3"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.18.2",
     "@hapi/code": "^9.x.x",
     "@hapi/lab": "^25.x.x",
     "c8": "^7.11.3",

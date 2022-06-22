@@ -16,6 +16,7 @@ const config = {
     api: {
       $filter: 'env',
       test: 9090,
+      production: 80,
       $default: 8080
     }
   },
